@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"runtime/debug"
+	"strings"
 	"syscall"
 	"time"
 
@@ -145,6 +146,6 @@ func logMiddleware(next httprouter.Handle) httprouter.Handle {
 		rw := newResponseLogger(w)
 		next(rw, req, params)
 
-		log.Infof("Response status: %d, Body: %s", rw.statusCode, rw.body.String())
+		log.Infof("Response status: %d, Body: %s", rw.statusCode, strings.TrimSuffix(rw.body.String(), "\n"))
 	}
 }
