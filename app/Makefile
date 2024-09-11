@@ -10,7 +10,7 @@ APP_NAME := sample-app
 BASE_VERSION := 1.0
 GITHUB_RUN_NUMBER ?= 0.dev
 VERSION = $(BASE_VERSION).$(GITHUB_RUN_NUMBER)
-DOCKER_REPO := ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com
+DOCKER_REPO := ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-1.amazonaws.com
 ECR_REPO := $(DOCKER_REPO)/$(APP_NAME)
 IMAGE_TAG := $(VERSION)
 
@@ -41,7 +41,7 @@ docker-push: docker-build ecr-login ## Publish the docker image into the ECR
 .PHONY: ecr-login
 ecr-login: ## Helper to login on ECR
 		@echo "Logging in to AWS ECR..."
-		aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(DOCKER_REPO)
+		aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin $(DOCKER_REPO)
 
 .PHONY: clean
 clean:
